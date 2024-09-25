@@ -3,12 +3,12 @@ package pa3;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class QueueTest {
+public class Queue2Test {
     // Add tests for the Queue class here
 
     @Test
     public void testEnqueue() {
-        Queue queue = new Queue();
+        Queue2 queue = new Queue2();
         Node node1 = new Node(4);
         Node node2 = new Node(5);
         queue.enqueue(node1);
@@ -18,13 +18,13 @@ public class QueueTest {
     
     @Test
     public void testDequeue() { //empty queue
-    	Queue queue = new Queue();
+    	Queue2 queue = new Queue2();
         assertEquals(null, queue.dequeue());
     }
     
     @Test
     public void testDequeue2() { //1 node
-    	Queue queue = new Queue();
+    	Queue2 queue = new Queue2();
     	Node node1 = new Node(4);
     	queue.enqueue(node1);
         assertEquals(node1, queue.dequeue());
@@ -33,7 +33,7 @@ public class QueueTest {
     
     @Test
     public void testIsEmpty() {
-    	Queue queue = new Queue();
+    	Queue2 queue = new Queue2();
     	assertEquals(true, queue.isEmpty());
     	Node node1 = new Node(4);
     	queue.enqueue(node1);

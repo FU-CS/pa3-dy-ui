@@ -1,5 +1,7 @@
 package pa3;
 
+import java.util.ArrayList;
+
 /**
  * A binary tree class that stores integers.
  * 
@@ -34,14 +36,27 @@ public class BinaryTree {
      * @return the level order traversal of the tree.
      */
     public String levelOrderTraversal() {
-        
+        ArrayList<String> result = new ArrayList<String>();
+        if (root == null)
+        	return "";
+        Queue q = new Queue();
+        q.enqueue(root);
+        while (! q.isEmpty()) {
+        	Node curr = q.dequeue();
+        	result.add(Integer.toString(curr.value));
+        	if (curr.left != null)
+        		q.enqueue(curr.left);
+        	if (curr.right != null)
+        		q.enqueue(curr.right);
+        }
+        return String.join(" ", result);
     }
 
     /** 
      * Helper method for levelOrderTraversal that takes a node as an argument.
      */
     private String levelOrderTraversalHelper(Node node, String result) {
-        
+        return "";
 
     }
 
@@ -55,7 +70,29 @@ public class BinaryTree {
      * @param value the value to add to the tree.
      */
     public void add(int value) {
-
+    	if (root == null) {
+        	root = new Node(value);
+        	return;
+    	}
+    	Queue q = new Queue();
+        q.enqueue(root);
+        while (! q.isEmpty()) {
+        	Node curr = q.dequeue();
+        	//result.add(Integer.toString(curr.value));
+        	if (curr.left != null)
+        		q.enqueue(curr.left);
+        	else {
+        		curr.left = new Node(value);
+        		return;
+        	}
+        		
+        	if (curr.right != null)
+        		q.enqueue(curr.right);
+        	else {
+        		curr.right = new Node(value);
+        		return;
+        	}
+        }
 
     }
 
@@ -78,19 +115,38 @@ public class BinaryTree {
      * 
      */
     public void invert() {
-
+    	invert(root);
        
+    }
+    
+    private void invert(Node root) {
+    	if (root == null)
+    		return;
+    	Node tmp = root.left ;
+    	root.left = root.right;
+    	root.right = tmp;
+    	invert(root.left);
+    	invert(root.right);
+    				
     }
 
     public int getHeight() {
-        
+    	if (root == null)
+    		return 0;
+        return this.getHeightHelper(root) - 1;
     }
 
     /** Counts the height of the tree 
      *  Height is defined as the number of edges in the longest path from the root to a leaf node. 
      */
     private int getHeightHelper(Node node) {
-
+    	if (node == null)
+    		return 0;
+    	int op1 = 1 + this.getHeightHelper(node.right);
+    	int op2 = 1 + this.getHeightHelper(node.left);
+    	if (op1 > op2) 
+    		return op1;
+    	return op2;
         
     }
 
@@ -110,5 +166,6 @@ public class BinaryTree {
         System.out.println(tree.levelOrderTraversal()); // Should print 1 3 2 7 6 5 4
 
         System.out.println(tree.getHeight()); // Should print 2
+        
     }
 }
